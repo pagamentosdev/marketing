@@ -1,177 +1,109 @@
 import { Link } from '@tanstack/react-router'
+import { Discord, GitHub, Logo, Twitter } from './icons'
 
-import { useState } from 'react'
-import {
-  ChevronDown,
-  ChevronRight,
-  Home,
-  Menu,
-  Network,
-  SquareFunction,
-  StickyNote,
-  X,
-} from 'lucide-react'
+const navItems = [
+	{
+		to: '/',
+		label: 'Início'
+	},
+	{
+		to: '/provedores',
+		label: 'Provedores'
+	},
+	{
+		to: '/taxas',
+		label: 'Taxas'
+	},
+	{
+		to: '/blog',
+		label: 'Blog'
+	},
+	{
+		external: true,
+		to: 'https://docs.pagamentos.dev',
+		label: 'Documentação'
+	}
+]
 
-export default function Header() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [groupedExpanded, setGroupedExpanded] = useState<
-    Record<string, boolean>
-  >({})
+export function NavItem({
+	to,
+	label,
+	external
+}: {
+	to: string
+	label: string
+	external?: boolean
+}) {
+	if (external) {
+		return (
+			<a
+				href={to}
+				className="h-full relative flex items-center justify-center text-sm font-medium"
+				target="_blank"
+				rel="noopener noreferrer"
+			>
+				{label}
+			</a>
+		)
+	}
 
-  return (
-    <>
-      <header className="p-4 flex items-center bg-gray-800 text-white shadow-lg">
-        <button
-          onClick={() => setIsOpen(true)}
-          className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
-          aria-label="Open menu"
-        >
-          <Menu size={24} />
-        </button>
-        <h1 className="ml-4 text-xl font-semibold">
-          <Link to="/">
-            <img
-              src="/tanstack-word-logo-white.svg"
-              alt="TanStack Logo"
-              className="h-10"
-            />
-          </Link>
-        </h1>
-      </header>
+	return (
+		<Link
+			to={to}
+			className="h-full relative flex items-center justify-center text-sm font-medium"
+			activeProps={{
+				className:
+					'after:block after:absolute after:bottom-[-1px] after:left-0 after:w-full after:h-[1px] after:bg-text'
+			}}
+		>
+			{label}
+		</Link>
+	)
+}
 
-      <aside
-        className={`fixed top-0 left-0 h-full w-80 bg-gray-900 text-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out flex flex-col ${
-          isOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
-      >
-        <div className="flex items-center justify-between p-4 border-b border-gray-700">
-          <h2 className="text-xl font-bold">Navigation</h2>
-          <button
-            onClick={() => setIsOpen(false)}
-            className="p-2 hover:bg-gray-800 rounded-lg transition-colors"
-            aria-label="Close menu"
-          >
-            <X size={24} />
-          </button>
-        </div>
+export function Header() {
+	return (
+		<div className="container mx-auto border border-t-0 border-border h-16">
+			<div className="w-full h-full flex px-8 items-center">
+				<Link to="/">
+					<Logo />
+				</Link>
 
-        <nav className="flex-1 p-4 overflow-y-auto">
-          <Link
-            to="/"
-            onClick={() => setIsOpen(false)}
-            className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
-            activeProps={{
-              className:
-                'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
-            }}
-          >
-            <Home size={20} />
-            <span className="font-medium">Home</span>
-          </Link>
+				<nav className="h-full ml-15 flex gap-8">
+					{navItems.map((item) => (
+						<NavItem
+							key={item.label}
+							to={item.to}
+							label={item.label}
+							external={item.external}
+						/>
+					))}
+				</nav>
 
-          {/* Demo Links Start */}
-
-          <Link
-            to="/demo/start/server-funcs"
-            onClick={() => setIsOpen(false)}
-            className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
-            activeProps={{
-              className:
-                'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
-            }}
-          >
-            <SquareFunction size={20} />
-            <span className="font-medium">Start - Server Functions</span>
-          </Link>
-
-          <Link
-            to="/demo/start/api-request"
-            onClick={() => setIsOpen(false)}
-            className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
-            activeProps={{
-              className:
-                'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
-            }}
-          >
-            <Network size={20} />
-            <span className="font-medium">Start - API Request</span>
-          </Link>
-
-          <div className="flex flex-row justify-between">
-            <Link
-              to="/demo/start/ssr"
-              onClick={() => setIsOpen(false)}
-              className="flex-1 flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
-              activeProps={{
-                className:
-                  'flex-1 flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
-              }}
-            >
-              <StickyNote size={20} />
-              <span className="font-medium">Start - SSR Demos</span>
-            </Link>
-            <button
-              className="p-2 hover:bg-gray-800 rounded-lg transition-colors"
-              onClick={() =>
-                setGroupedExpanded((prev) => ({
-                  ...prev,
-                  StartSSRDemo: !prev.StartSSRDemo,
-                }))
-              }
-            >
-              {groupedExpanded.StartSSRDemo ? (
-                <ChevronDown size={20} />
-              ) : (
-                <ChevronRight size={20} />
-              )}
-            </button>
-          </div>
-          {groupedExpanded.StartSSRDemo && (
-            <div className="flex flex-col ml-4">
-              <Link
-                to="/demo/start/ssr/spa-mode"
-                onClick={() => setIsOpen(false)}
-                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
-                activeProps={{
-                  className:
-                    'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
-                }}
-              >
-                <StickyNote size={20} />
-                <span className="font-medium">SPA Mode</span>
-              </Link>
-
-              <Link
-                to="/demo/start/ssr/full-ssr"
-                onClick={() => setIsOpen(false)}
-                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
-                activeProps={{
-                  className:
-                    'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
-                }}
-              >
-                <StickyNote size={20} />
-                <span className="font-medium">Full SSR</span>
-              </Link>
-
-              <Link
-                to="/demo/start/ssr/data-only"
-                onClick={() => setIsOpen(false)}
-                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
-                activeProps={{
-                  className:
-                    'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
-                }}
-              >
-                <StickyNote size={20} />
-                <span className="font-medium">Data Only</span>
-              </Link>
-            </div>
-          )}
-
-          {/* Demo Links End */}
-        </nav>
-      </aside>
-    </>
-  )
+				<div className="ml-auto flex items-center gap-4">
+					<a
+						href="https://x.com/pagamentosdev"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						<Twitter />
+					</a>
+					<a
+						href="https://discord.gg/pagamentosdev"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						<Discord />
+					</a>
+					<a
+						href="https://github.com/pagamentosdev/pagamentos"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						<GitHub />
+					</a>
+				</div>
+			</div>
+		</div>
+	)
 }
