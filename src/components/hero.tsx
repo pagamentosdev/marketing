@@ -222,14 +222,14 @@ export function Hero() {
 					</div>
 				</div>
 
-				<div className="w-full max-w-full lg:max-w-155 h-full border border-border rounded-[10px] flex flex-col">
+				<div className="w-full max-w-full lg:max-w-155 h-full border border-border rounded-[10px] flex flex-col overflow-hidden">
 					<div className="h-8 flex items-center justify-center px-3 text-[13px]/4 border-b border-border tracking-[-0.006em] select-none">
 						<div className="flex items-center justify-center gap-1">
 							<TypeScript />
 							pagamentos.ts
 						</div>
 					</div>
-					<div className="w-full lg:h-93">
+					<div className="w-full lg:min-h-93">
 						<div
 							className="rounded-b-[10px] relative group"
 							style={{
@@ -316,7 +316,7 @@ export function Hero() {
 																className="flex gap-2 items-start"
 															>
 																<div
-																	className="h-5 w-5 select-none tabular-nums text-right"
+																	className="h-5 w-6 shrink-0 select-none tabular-nums text-right pr-1"
 																	style={{ color: 'var(--ray-token-comment)' }}
 																>
 																	{index + 1}
