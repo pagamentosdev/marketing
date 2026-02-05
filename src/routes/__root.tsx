@@ -1,7 +1,7 @@
 import { TanStackDevtools } from '@tanstack/react-devtools'
 import { createRootRoute, HeadContent, Scripts } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
-import { Header } from '@/components/Header'
+import { Header } from '@/components/header'
 import appCss from '../styles.css?url'
 
 export const Route = createRootRoute({
@@ -20,6 +20,19 @@ export const Route = createRootRoute({
 		],
 		links: [
 			{
+				rel: 'preconnect',
+				href: 'https://fonts.googleapis.com'
+			},
+			{
+				rel: 'preconnect',
+				href: 'https://fonts.gstatic.com',
+				crossOrigin: 'anonymous'
+			},
+			{
+				rel: 'stylesheet',
+				href: 'https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Red+Hat+Display:ital,wght@0,600;1,600&display=swap'
+			},
+			{
 				rel: 'stylesheet',
 				href: appCss
 			}
@@ -31,7 +44,7 @@ export const Route = createRootRoute({
 
 function RootDocument({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang="en">
+		<html lang="pt-BR">
 			<head>
 				<HeadContent />
 			</head>
