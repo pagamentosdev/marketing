@@ -133,8 +133,8 @@ export function Hero() {
 
 	return (
 		<div className="container mx-auto border border-t-0 border-border">
-			<div className="w-full h-full py-16 px-32 flex justify-between items-center">
-				<div className="w-full max-w-119 flex flex-col gap-8">
+			<div className="w-full h-full py-12 px-6 sm:px-10 lg:px-20 xl:px-32 flex flex-col lg:flex-row justify-between items-center gap-10 lg:gap-16">
+				<div className="w-full max-w-full lg:max-w-119 flex flex-col gap-6 lg:gap-8">
 					<h1 className="font-display text-5xl/16 font-semibold">
 						Uma integração, todos os pagamentos
 					</h1>
@@ -222,16 +222,16 @@ export function Hero() {
 					</div>
 				</div>
 
-				<div className="w-full max-w-155 h-full border border-border rounded-[10px] flex flex-col">
+				<div className="w-full max-w-full lg:max-w-155 h-full border border-border rounded-[10px] flex flex-col">
 					<div className="h-8 flex items-center justify-center px-3 text-[13px]/4 border-b border-border tracking-[-0.006em] select-none">
 						<div className="flex items-center justify-center gap-1">
 							<TypeScript />
 							pagamentos.ts
 						</div>
 					</div>
-					<div className="w-full h-93">
+					<div className="w-full lg:h-93">
 						<div
-							className="h-full rounded-b-[10px] relative group"
+							className="rounded-b-[10px] relative group"
 							style={{
 								backgroundColor: '#fafafa',
 								color: 'var(--ray-foreground)',
@@ -271,7 +271,7 @@ export function Hero() {
 								</div>
 							</button>
 							<div
-								className="h-full px-2 pt-2 pb-2 font-mono text-[13px] leading-5 overflow-hidden"
+								className="px-2 pt-2 pb-2 font-mono text-[13px] leading-5 overflow-x-auto overflow-y-hidden"
 								style={{
 									fontFamily:
 										'JetBrains Mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace'
@@ -302,11 +302,14 @@ export function Hero() {
 												<div className="flex flex-col">
 													{tokens.map((line, index) => {
 														const tokenOccurrences = new Map<string, number>()
-														const { className: lineClassName, ...lineProps } =
-															getLineProps({
-																line,
-																key: index
-															})
+														const {
+															className: lineClassName,
+															key: _lineKey,
+															...lineProps
+														} = getLineProps({
+															line,
+															key: index
+														})
 														return (
 															<div
 																key={lineKeys[index]}
@@ -329,10 +332,18 @@ export function Hero() {
 																			(tokenOccurrences.get(tokenKeyBase) ??
 																				0) + 1
 																		tokenOccurrences.set(tokenKeyBase, count)
+																		const tokenProps = getTokenProps({
+																			token,
+																			key
+																		})
+																		const {
+																			key: _tokenKey,
+																			...restTokenProps
+																		} = tokenProps
 																		return (
 																			<span
 																				key={`${tokenKeyBase}-${count}`}
-																				{...getTokenProps({ token, key })}
+																				{...restTokenProps}
 																			/>
 																		)
 																	})}
