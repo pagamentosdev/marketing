@@ -4,6 +4,9 @@
   "editor.formatOnSave": true,
   "editor.formatOnPaste": true,
   "emmet.showExpandedAbbreviation": "never",
+  "[astro]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
   "[javascript]": {
     "editor.defaultFormatter": "biomejs.biome"
   },
@@ -50,15 +53,16 @@
     "source.fixAll.biome": "explicit",
     "source.organizeImports.biome": "explicit"
   },
-	"files.exclude": {
-		"**/.git": true,
-		"**/.svn": true,
-		"**/.hg": true,
-		"**/.DS_Store": true,
-		"**/Thumbs.db": true,
-		"**/.vscode": true,
-		"**/node_modules": true,
-		"**/dist": true,
-		"**/.tanstack": true
-	}
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/.vscode": true,
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/.tanstack": true,
+    "**/.astro": true
+  }
 }

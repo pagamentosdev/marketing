@@ -1,43 +1,42 @@
-import { providers } from "../data/providers";
+import { providers } from '../data/providers'
 
 export function Provedores() {
-  const minItemsPerSet = 12;
-  const repeatCount = Math.ceil(minItemsPerSet / providers.length);
+  const minItemsPerSet = 12
+  const repeatCount = Math.ceil(minItemsPerSet / providers.length)
   const marqueeProviders = Array.from(
     { length: repeatCount },
-    () => providers,
-  ).flat();
+    () => providers
+  ).flat()
 
   return (
-    <div className="flex flex-col border border-t-0 border-border container mx-auto">
-      <div className="flex items-start px-8 py-5 text-lg/6 tracking-[-0.006em] border-b border-border">
+    <div className="container mx-auto flex flex-col border border-border border-t-0">
+      <div className="flex items-start border-border border-b px-8 py-5 text-lg/6 tracking-[-0.006em]">
         Conheça todos os provedores suportados:
       </div>
 
-      <div className="w-full overflow-hidden h-24">
-        <div className="marquee-track flex items-center h-full hover:pause-animation">
+      <div className="h-24 w-full overflow-hidden">
+        <div className="marquee-track hover:pause-animation flex h-full items-center">
           {/* First set */}
-          <div className="marquee-content flex items-center shrink-0 justify-around gap-8 px-6">
+          <div className="marquee-content flex shrink-0 items-center justify-around gap-8 px-6">
             {marqueeProviders.map((provider, index) => (
               <a
-                key={`${provider.id}-${index}`}
+                className="shrink-0 cursor-pointer transition-opacity hover:opacity-70"
                 href={`/provedores/${provider.id}`}
-                className="cursor-pointer transition-opacity hover:opacity-70 shrink-0"
+                key={`${provider.id}-${index}`}
               >
                 <provider.icon className="h-8 w-auto" />
               </a>
             ))}
           </div>
-          {/* Second set - duplicate for seamless loop */}
           <div
-            className="marquee-content flex items-center shrink-0 justify-around gap-8 px-6"
             aria-hidden="true"
+            className="marquee-content flex shrink-0 items-center justify-around gap-8 px-6"
           >
             {marqueeProviders.map((provider, index) => (
               <a
-                key={`${provider.id}-${index}-dup`}
+                className="shrink-0 cursor-pointer transition-opacity hover:opacity-70"
                 href={`/provedores/${provider.id}`}
-                className="cursor-pointer transition-opacity hover:opacity-70 shrink-0"
+                key={`${provider.id}-${index}-dup`}
               >
                 <provider.icon className="h-8 w-auto" />
               </a>
@@ -46,5 +45,5 @@ export function Provedores() {
         </div>
       </div>
     </div>
-  );
+  )
 }

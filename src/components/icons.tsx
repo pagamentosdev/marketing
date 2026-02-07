@@ -1,33 +1,33 @@
 export function Logo(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
-      width="36"
+      fill="none"
       height="36"
       viewBox="0 0 36 36"
-      fill="none"
+      width="36"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
       <title>pagamentos.dev</title>
       <path
-        d="M0 6C0 2.68629 2.68629 0 6 0H30C33.3137 0 36 2.68629 36 6V30C36 33.3137 33.3137 36 30 36H6C2.68629 36 0 33.3137 0 30V6Z"
         className="fill-text"
+        d="M0 6C0 2.68629 2.68629 0 6 0H30C33.3137 0 36 2.68629 36 6V30C36 33.3137 33.3137 36 30 36H6C2.68629 36 0 33.3137 0 30V6Z"
       />
       <path
-        d="M18 18C18 24.6274 12.6274 30 6 30C6 23.3726 11.3726 18 18 18ZM18 18C24.6274 18 30 23.3726 30 30C23.3726 30 18 24.6274 18 18ZM6 6C12.6274 6 18 11.3726 18 18C11.3726 18 6 12.6274 6 6ZM30 6C30 12.6274 24.6274 18 18 18C18 11.3726 23.3726 6 30 6Z"
         className="fill-background"
+        d="M18 18C18 24.6274 12.6274 30 6 30C6 23.3726 11.3726 18 18 18ZM18 18C24.6274 18 30 23.3726 30 30C23.3726 30 18 24.6274 18 18ZM6 6C12.6274 6 18 11.3726 18 18C11.3726 18 6 12.6274 6 6ZM30 6C30 12.6274 24.6274 18 18 18C18 11.3726 23.3726 6 30 6Z"
       />
     </svg>
-  );
+  )
 }
 
 export function Discord(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
-      width="20"
+      fill="none"
       height="20"
       viewBox="0 0 20 20"
-      fill="none"
+      width="20"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
@@ -37,16 +37,16 @@ export function Discord(props: React.SVGProps<SVGSVGElement>) {
         fill="#525252"
       />
     </svg>
-  );
+  )
 }
 
 export function GitHub(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
-      width="20"
+      fill="none"
       height="20"
       viewBox="0 0 20 20"
-      fill="none"
+      width="20"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
@@ -56,16 +56,16 @@ export function GitHub(props: React.SVGProps<SVGSVGElement>) {
         fill="currentColor"
       />
     </svg>
-  );
+  )
 }
 
 export function Twitter(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
-      width="16"
+      fill="none"
       height="16"
       viewBox="0 0 16 16"
-      fill="none"
+      width="16"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
@@ -75,16 +75,16 @@ export function Twitter(props: React.SVGProps<SVGSVGElement>) {
         fill="#525252"
       />
     </svg>
-  );
+  )
 }
 
 export function TypeScript(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
-      width="16"
+      fill="none"
       height="16"
       viewBox="0 0 16 16"
-      fill="none"
+      width="16"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
@@ -94,5 +94,5 @@ export function TypeScript(props: React.SVGProps<SVGSVGElement>) {
         fill="#2563EB"
       />
     </svg>
-  );
+  )
 }
