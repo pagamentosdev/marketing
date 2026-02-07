@@ -104,24 +104,20 @@ const triggerTheme: PrismTheme = {
 }
 
 export function Hero() {
-  const [selectedCommand, setSelectedCommand] = useState(commands[0])
-
-  useEffect(() => {
-    const preferredPackageManager = localStorage.getItem(
-      'preferredPackageManager'
-    )
-
-    if (preferredPackageManager) {
-      const foundCommand = commands.find(
-        (cmd) =>
-          cmd.label.toLowerCase() === preferredPackageManager.toLowerCase()
-      )
-
-      if (foundCommand) {
-        setSelectedCommand(foundCommand)
-      }
+  const [selectedCommand, setSelectedCommand] = useState(() => {
+    // only happens in dev during ssr
+    if (typeof window === 'undefined') {
+      return commands[0]
     }
-  }, [])
+
+    const preferred = localStorage.getItem('preferredPackageManager')
+
+    return (
+      commands.find(
+        (cmd) => cmd.label.toLowerCase() === preferred?.toLowerCase()
+      ) ?? commands[0]
+    )
+  })
   const [successOnCopy, setSuccessOnCopy] = useState(false)
   const [successOnSnippetCopy, setSuccessOnSnippetCopy] = useState(false)
   const [showCheckIcon, setShowCheckIcon] = useState(false)
