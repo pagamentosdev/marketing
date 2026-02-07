@@ -72,12 +72,23 @@ export function NavItem({
 export function Header() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-	const toggleMenu = () => {
-		setIsMenuOpen((open) => !open)
+	function toggleMenu() {
+		setIsMenuOpen((open) => {
+			const newState = !open
+
+			if (newState) {
+				document.body.style.overflow = 'hidden'
+			} else {
+				document.body.style.overflow = ''
+			}
+
+			return newState
+		})
 	}
 
-	const closeMenu = () => {
+	function closeMenu() {
 		setIsMenuOpen(false)
+		document.body.style.overflow = ''
 	}
 
 	return (
@@ -120,6 +131,7 @@ export function Header() {
 						href="https://github.com/pagamentosdev/pagamentos"
 						target="_blank"
 						rel="noopener noreferrer"
+						className="text-[#525252]"
 					>
 						<GitHub />
 					</a>
@@ -142,7 +154,7 @@ export function Header() {
 			</div>
 
 			{isMenuOpen && (
-				<div className="md:hidden fixed inset-x-0 top-16 bottom-0 border-t border-border bg-background">
+				<div className="container mx-auto border border-b-0 md:hidden z-50 fixed inset-x-0 top-16 bottom-0 border-border bg-background">
 					<div className="flex h-full flex-col px-6 py-6">
 						<nav className="flex flex-col gap-4">
 							{navItems.map((item) => (
@@ -176,6 +188,7 @@ export function Header() {
 								href="https://github.com/pagamentosdev/pagamentos"
 								target="_blank"
 								rel="noopener noreferrer"
+								className="text-[#525252]"
 							>
 								<GitHub />
 							</a>

@@ -13,6 +13,7 @@ import { Route as TaxasRouteImport } from './routes/taxas'
 import { Route as ProvedoresRouteImport } from './routes/provedores'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ProvedoresProvedorRouteImport } from './routes/provedores.$provedor'
 import { Route as DemoStartServerFuncsRouteImport } from './routes/demo/start.server-funcs'
 import { Route as DemoStartApiRequestRouteImport } from './routes/demo/start.api-request'
 import { Route as DemoApiNamesRouteImport } from './routes/demo/api.names'
@@ -40,6 +41,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const ProvedoresProvedorRoute = ProvedoresProvedorRouteImport.update({
+  id: '/$provedor',
+  path: '/$provedor',
+  getParentRoute: () => ProvedoresRoute,
 } as any)
 const DemoStartServerFuncsRoute = DemoStartServerFuncsRouteImport.update({
   id: '/demo/start/server-funcs',
@@ -80,8 +86,9 @@ const DemoStartSsrDataOnlyRoute = DemoStartSsrDataOnlyRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/blog': typeof BlogRoute
-  '/provedores': typeof ProvedoresRoute
+  '/provedores': typeof ProvedoresRouteWithChildren
   '/taxas': typeof TaxasRoute
+  '/provedores/$provedor': typeof ProvedoresProvedorRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
@@ -93,8 +100,9 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/blog': typeof BlogRoute
-  '/provedores': typeof ProvedoresRoute
+  '/provedores': typeof ProvedoresRouteWithChildren
   '/taxas': typeof TaxasRoute
+  '/provedores/$provedor': typeof ProvedoresProvedorRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
@@ -107,8 +115,9 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/blog': typeof BlogRoute
-  '/provedores': typeof ProvedoresRoute
+  '/provedores': typeof ProvedoresRouteWithChildren
   '/taxas': typeof TaxasRoute
+  '/provedores/$provedor': typeof ProvedoresProvedorRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
   '/demo/start/server-funcs': typeof DemoStartServerFuncsRoute
@@ -124,6 +133,7 @@ export interface FileRouteTypes {
     | '/blog'
     | '/provedores'
     | '/taxas'
+    | '/provedores/$provedor'
     | '/demo/api/names'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
@@ -137,6 +147,7 @@ export interface FileRouteTypes {
     | '/blog'
     | '/provedores'
     | '/taxas'
+    | '/provedores/$provedor'
     | '/demo/api/names'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
@@ -150,6 +161,7 @@ export interface FileRouteTypes {
     | '/blog'
     | '/provedores'
     | '/taxas'
+    | '/provedores/$provedor'
     | '/demo/api/names'
     | '/demo/start/api-request'
     | '/demo/start/server-funcs'
@@ -162,7 +174,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BlogRoute: typeof BlogRoute
-  ProvedoresRoute: typeof ProvedoresRoute
+  ProvedoresRoute: typeof ProvedoresRouteWithChildren
   TaxasRoute: typeof TaxasRoute
   DemoApiNamesRoute: typeof DemoApiNamesRoute
   DemoStartApiRequestRoute: typeof DemoStartApiRequestRoute
@@ -202,6 +214,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/provedores/$provedor': {
+      id: '/provedores/$provedor'
+      path: '/$provedor'
+      fullPath: '/provedores/$provedor'
+      preLoaderRoute: typeof ProvedoresProvedorRouteImport
+      parentRoute: typeof ProvedoresRoute
     }
     '/demo/start/server-funcs': {
       id: '/demo/start/server-funcs'
@@ -255,10 +274,22 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface ProvedoresRouteChildren {
+  ProvedoresProvedorRoute: typeof ProvedoresProvedorRoute
+}
+
+const ProvedoresRouteChildren: ProvedoresRouteChildren = {
+  ProvedoresProvedorRoute: ProvedoresProvedorRoute,
+}
+
+const ProvedoresRouteWithChildren = ProvedoresRoute._addFileChildren(
+  ProvedoresRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BlogRoute: BlogRoute,
-  ProvedoresRoute: ProvedoresRoute,
+  ProvedoresRoute: ProvedoresRouteWithChildren,
   TaxasRoute: TaxasRoute,
   DemoApiNamesRoute: DemoApiNamesRoute,
   DemoStartApiRequestRoute: DemoStartApiRequestRoute,

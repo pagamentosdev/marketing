@@ -5,7 +5,8 @@ import {
 	type PrismTheme,
 	type RenderProps
 } from 'prism-react-renderer'
-import { type CSSProperties, useState } from 'react'
+import { type CSSProperties, useEffect, useState } from 'react'
+import { DictionaryPopover } from './dictionary-popover'
 import { GitHub, TypeScript } from './icons'
 
 const commands = [
@@ -103,9 +104,47 @@ const triggerTheme: PrismTheme = {
 }
 
 export function Hero() {
-	const [selectedCommand, setSelectedCommand] = useState(commands[0])
+	const [selectedCommand, setSelectedCommand] = useState(() => {
+		const defaultCommand = commands[0]
+		const preferredPackageManager = localStorage.getItem(
+			'preferredPackageManager'
+		)
+
+		if (preferredPackageManager) {
+			const foundCommand = commands.find(
+				(cmd) =>
+					cmd.label.toLowerCase() === preferredPackageManager.toLowerCase()
+			)
+
+			if (foundCommand) {
+				return foundCommand
+			}
+		}
+
+		return defaultCommand
+	})
 	const [successOnCopy, setSuccessOnCopy] = useState(false)
 	const [successOnSnippetCopy, setSuccessOnSnippetCopy] = useState(false)
+	const [showCheckIcon, setShowCheckIcon] = useState(false)
+	const [showSnippetCheckIcon, setShowSnippetCheckIcon] = useState(false)
+
+	useEffect(() => {
+		if (successOnCopy) {
+			setShowCheckIcon(true)
+		} else {
+			const timeout = setTimeout(() => setShowCheckIcon(false), 200)
+			return () => clearTimeout(timeout)
+		}
+	}, [successOnCopy])
+
+	useEffect(() => {
+		if (successOnSnippetCopy) {
+			setShowSnippetCheckIcon(true)
+		} else {
+			const timeout = setTimeout(() => setShowSnippetCheckIcon(false), 200)
+			return () => clearTimeout(timeout)
+		}
+	}, [successOnSnippetCopy])
 
 	function handleCopy() {
 		navigator.clipboard
@@ -131,6 +170,11 @@ export function Hero() {
 			})
 	}
 
+	function handleCommandSelect(cmd: (typeof commands)[number]) {
+		setSelectedCommand(cmd)
+		localStorage.setItem('preferredPackageManager', cmd.label.toLowerCase())
+	}
+
 	return (
 		<div className="container mx-auto border border-t-0 border-border">
 			<div className="w-full h-full py-12 px-6 sm:px-10 lg:px-20 xl:px-32 flex flex-col lg:flex-row justify-between items-center gap-10 lg:gap-16">
@@ -142,9 +186,13 @@ export function Hero() {
 					<div className="text-lg/8 inline">
 						Esqueça outras documentações. Uma interface única e consistente para
 						qualquer provedor, sem{' '}
-						<div className="underline decoration-dotted underline-offset-4 italic w-fit inline">
-							lock-in
-						</div>
+						<DictionaryPopover
+							trigger={<span className="italic">lock-in</span>}
+							term="lock-in"
+							pronunciation="/ˈlɒk ɪn/"
+							definition="Dependência tecnológica onde o usuário fica preso a uma solução específica, tornando-se difícil ou custoso migrar para outra alternativa."
+							example="Evite o vendor lock-in escolhendo bibliotecas open-source."
+						/>
 						<div className="inline italic">.</div>
 					</div>
 
@@ -176,7 +224,7 @@ export function Hero() {
 									className="relative select-none text-xs/4 h-full tracking-[-0.006em] text-muted hover:text-text transition-colors data-[active=true]:text-text data-[active=true]:after data-[active=true]:after:block data-[active=true]:after:absolute data-[active=true]:after:-bottom-px data-[active=true]:after:left-0 data-[active=true]:after:w-full data-[active=true]:after:h-px data-[active=true]:after:bg-text"
 									type="button"
 									data-active={cmd.label === selectedCommand.label}
-									onClick={() => setSelectedCommand(cmd)}
+									onClick={() => handleCommandSelect(cmd)}
 								>
 									{cmd.label}
 								</button>
@@ -187,7 +235,7 @@ export function Hero() {
 							<span>{selectedCommand.command}</span>
 
 							<button
-								className="opacity-0 group-hover:opacity-100 data-[active=true]:opacity-100 w-6 h-6 flex items-center justify-center rounded-md border border-border hover:bg-gray-100 transition-all active:scale-95"
+								className="opacity-0 group-hover:opacity-100 data-[active=true]:opacity-100 w-6 h-6 flex items-center justify-center rounded-md border border-border hover:bg-gray-100 transition-opacity duration-200 ease-out active:scale-95"
 								type="button"
 								onClick={handleCopy}
 								aria-label="Copiar comando para área de transferência"
@@ -198,8 +246,8 @@ export function Hero() {
 										className="absolute inset-0 flex items-center justify-center"
 										initial={false}
 										animate={{
-											scale: successOnCopy ? 1 : 0.5,
-											opacity: successOnCopy ? 1 : 0
+											scale: showCheckIcon ? 1 : 0.5,
+											opacity: showCheckIcon ? 1 : 0
 										}}
 										transition={{ duration: 0.2, ease: 'easeOut' }}
 									>
@@ -209,8 +257,8 @@ export function Hero() {
 										className="absolute inset-0 flex items-center justify-center"
 										initial={false}
 										animate={{
-											scale: successOnCopy ? 0.5 : 1,
-											opacity: successOnCopy ? 0 : 1
+											scale: showCheckIcon ? 0.5 : 1,
+											opacity: showCheckIcon ? 0 : 1
 										}}
 										transition={{ duration: 0.2, ease: 'easeOut' }}
 									>
@@ -239,7 +287,7 @@ export function Hero() {
 							}}
 						>
 							<button
-								className="absolute top-2 right-2 z-10 w-6 h-6 flex items-center justify-center rounded-md border border-border bg-white/80 backdrop-blur opacity-0 group-hover:opacity-100 data-[active=true]:opacity-100 transition-all active:scale-95"
+								className="absolute top-2 right-2 z-10 w-6 h-6 flex items-center justify-center rounded-md border border-border bg-white/80 backdrop-blur opacity-0 group-hover:opacity-100 data-[active=true]:opacity-100 transition-opacity duration-200 ease-out active:scale-95"
 								type="button"
 								onClick={handleCopySnippet}
 								aria-label="Copiar código para área de transferência"
@@ -250,8 +298,8 @@ export function Hero() {
 										className="absolute inset-0 flex items-center justify-center"
 										initial={false}
 										animate={{
-											scale: successOnSnippetCopy ? 1 : 0.5,
-											opacity: successOnSnippetCopy ? 1 : 0
+											scale: showSnippetCheckIcon ? 1 : 0.5,
+											opacity: showSnippetCheckIcon ? 1 : 0
 										}}
 										transition={{ duration: 0.2, ease: 'easeOut' }}
 									>
@@ -261,8 +309,8 @@ export function Hero() {
 										className="absolute inset-0 flex items-center justify-center"
 										initial={false}
 										animate={{
-											scale: successOnSnippetCopy ? 0.5 : 1,
-											opacity: successOnSnippetCopy ? 0 : 1
+											scale: showSnippetCheckIcon ? 0.5 : 1,
+											opacity: showSnippetCheckIcon ? 0 : 1
 										}}
 										transition={{ duration: 0.2, ease: 'easeOut' }}
 									>
