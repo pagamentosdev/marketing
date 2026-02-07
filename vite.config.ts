@@ -7,18 +7,15 @@ import viteTsConfigPaths from 'vite-tsconfig-paths'
 
 const config = defineConfig({
 	plugins: [
-		// devtools(),
 		viteTsConfigPaths({
 			projects: ['./tsconfig.json']
 		}),
 		tailwindcss(),
 		tanstackStart({
-			spa: {
-				enabled: true
-			},
 			prerender: {
 				enabled: true,
-				autoSubfolderIndex: true
+				autoSubfolderIndex: true,
+				crawlLinks: true
 			}
 		}),
 		viteReact()
