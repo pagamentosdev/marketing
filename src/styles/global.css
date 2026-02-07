@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 @theme inline {
-  --font-sans: 'Inter', sans-serif;
-  --font-display: 'Red Hat Display', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-sans: "Inter", sans-serif;
+  --font-display: "Red Hat Display", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
   --color-background: var(--color-background);
   --color-border: var(--color-border);
   --color-text: var(--color-text);
@@ -17,17 +17,14 @@
   --color-muted: hsl(0, 0%, 36%);
 }
 
-.dark {
-
-}
-
 body {
   font-family: var(--font-sans);
   color: var(--color-text);
   background-color: var(--color-background);
 }
 
-a, button {
+a,
+button {
   font-family: var(--font-sans);
 }
 
